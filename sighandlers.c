@@ -40,15 +40,15 @@ int sigaction_wrapper(int signum, handler_t * handler) {
  */
 void sigchld_handler(int sig) {
 
-    int status,jid;
+    int status;
     pid_t pid_f;
 
     if (verbose) {
-        printf("Entering \n");
+        printf("Entering sigchld_handler\n");
     }
 
     pid_f = waitpid(-1,&status,WUNTRACED);
-    jid = jobs_pid2jid(pid_f);
+    jobs_pid2jid(pid_f);
 
     if (WIFSIGNALED(status)) {
         jobs_deletejob(pid_f);
@@ -66,10 +66,11 @@ void sigchld_handler(int sig) {
 
     if (WIFSTOPPED(status)) {
 
-        struct job_t tmp;
+        struct job_t *tmp;
 
-        tmp.jb_state = ST;
-        tmp = *(jobs_getjobpid(pid_f));
+        tmp = jobs_getjobpid(pid_f);
+        tmp->jb_state = ST;
+        
 
         if (verbose) {
             printf("Signal arrêté\n");
@@ -139,7 +140,7 @@ void sigtstp_handler(int sig) {
         status = kill(pid,SIGTSTP); 
 
         if (status< 0) {
-            unix_error("error");
+            unix_error("kill error");
         }
 
         if (verbose) {
