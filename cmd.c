@@ -231,14 +231,16 @@ void do_kill(char **argv) {
 
 /* do_exit - Execute the builtin exit command */
 void do_exit() {
-    printf("do_exit : To be implemented\n");
-
-    return;
+    if (verbose) {
+        printf("Exiting \n");
+    }
+    exit(EXIT_SUCCESS);
 }
 
 /* do_jobs - Execute the builtin fg command */
 void do_jobs() {
-    printf("do_jobs : To be implemented\n");
-
-    return;
+    if (verbose) {
+        printf("Current jobs in the foreground process\n");
+    }
+    jobs_listjobs();
 }

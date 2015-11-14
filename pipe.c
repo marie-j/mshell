@@ -1,6 +1,7 @@
 /* mshell - a job manager */
 
 #include <stdio.h>
+#include <string.h>
 #include "pipe.h"
 
 void do_pipe(char *cmds[MAXCMDS][MAXARGS], int nbcmd, int bg) {
