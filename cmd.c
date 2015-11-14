@@ -202,6 +202,7 @@ void do_kill(char **argv) {
     
    struct job_t *job;
    int k;
+   
 
    if (verbose) {
     printf("Entering kill\n");
